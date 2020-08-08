@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.14.2/matter.min.js"></script>
+    <style>
+      body{
+        margin: 0;
+        overflow: hidden;
+      }
+      .hidden{
+        display: none !important;
+      }
+      h1{
+        font-size: 64px;
+        color: aliceblue;
+        margin: 20px;
+      }
+      button{
+        background-color: transparent;
+        padding: 10px;
+        border: 2px solid white;
+        color: white;
+        cursor: pointer;
+      }
+      .winner{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        z-index: 1;
+        height: 100vh;
+        width: 100vw;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="winner hidden">
+      <h1>You Win!</h1>
+      <button>play again</button>
+    </div>
+    <script src="script.js">
+      //var now = new Date().getTime();
+        function startTimer(duration, display) {
+            var start = Date.now(),
+                diff,
+                minutes,
+                seconds;
+
+            function timer() {
+                if(playing) {
+                    diff = duration - (((Date.now() - start) / 1000) | 0);
+                    minutes = (diff / 60) | 0;
+                    seconds = (diff % 60) | 0;
+                    minutes = minutes < 10 ? "0" + minutes : minutes;
+                    seconds = seconds < 10 ? "0" + seconds : seconds;
+                    display.textContent = "Game ends in " + minutes + ":" + seconds;
+
+                    if (diff <= 0) {
+                        display.textContent = "Game Over";
+                        start = Date.now() + 1000;
+                        playing = false
+                        modelfungo();
+                    }
+                }
+            };
+            timer();
+            setInterval(timer,1000)
+        }
+
+        window.onload = function () {
+            twominutes = 30;
+            x = document.querySelector("#timerel");
+            startTimer(twominutes,x)
+        }
+        playing = true
+        window.addEventListener('keydown',doKeyDown,true);
+
+    </script>
+
+
+  </body>
+</html>
